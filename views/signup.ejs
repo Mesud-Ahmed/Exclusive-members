@@ -1,0 +1,68 @@
+<!-- views/signup.ejs -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sign Up</title>
+</head>
+<body>
+  <h1>Sign up</h1>
+
+  <% if (messages && messages.error) { %>
+    <div style="color: red;">
+      <% messages.error.forEach(m => { %><p><%= m %></p><% }) %>
+    </div>
+  <% } %>
+
+  <% if (messages && messages.success) { %>
+    <div style="color: green;">
+      <% messages.success.forEach(m => { %><p><%= m %></p><% }) %>
+    </div>
+  <% } %>
+
+  <% if (errors && errors.length) { %>
+    <ul style="color: red;">
+      <% errors.forEach(err => { %><li><%= err.msg %></li><% }) %>
+    </ul>
+  <% } %>
+
+  <form action="/signup" method="post" novalidate>
+    <div>
+      <label>First name:
+        <input type="text" name="firstName" value="<%= old.firstName || '' %>">
+      </label>
+    </div>
+    <div>
+      <label>Last name:
+        <input type="text" name="lastName" value="<%= old.lastName || '' %>">
+      </label>
+    </div>
+    <div>
+      <label>Email:
+        <input type="email" name="email" value="<%= old.email || '' %>">
+      </label>
+    </div>
+    <div>
+      <label>Password:
+        <input type="password" name="password">
+      </label>
+    </div>
+    <div>
+      <label>Confirm password:
+        <input type="password" name="confirmPassword">
+      </label>
+    </div>
+
+    <!-- optional admin checkbox (simple approach) -->
+    <div>
+      <label>Make this user admin?
+        <input type="checkbox" name="admin" <%= old.admin ? 'checked' : '' %> />
+      </label>
+    </div>
+
+    <button type="submit">Create account</button>
+  </form>
+
+  <p>Already have an account? <a href="/login">Log in</a></p>
+</body>
+</html>
