@@ -1,0 +1,13 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Clubhouse' %></title>
+<link rel="stylesheet" href="/css/theme.css" />
+<script>
+    setTimeout(() => {
+      document.querySelectorAll('.flash').forEach(el => {
+        el.style.transition = 'opacity 0.5s';
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 500);
+      });
+    }, 2000);
+  </script>

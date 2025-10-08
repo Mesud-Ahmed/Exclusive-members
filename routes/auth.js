@@ -2,13 +2,19 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 const { check, validationResult } = require('express-validator');
-
 const { createUser, findUserByEmail } = require('../models/userModel');
+require('dotenv').config();
 
 // GET /signup
 router.get('/signup', (req, res) => {
   res.render('signup', { errors: [], old: {}, messages: req.flash() });
+});
+
+// GET /login
+router.get('/login', (req, res) => {
+  res.render('login', { messages: req.flash() });
 });
 
 // POST /signup
@@ -29,7 +35,6 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     const { firstName, lastName, email, password } = req.body;
-    const admin = req.body.admin === 'on';
 
     if (!errors.isEmpty()) {
       return res.status(400).render('signup', { errors: errors.array(), old: req.body, messages: req.flash() });
@@ -38,11 +43,18 @@ router.post(
     try {
       const existing = await findUserByEmail(email);
       if (existing) {
-        return res.status(400).render('signup', { errors: [{ msg: 'Email already registered' }], old: req.body, messages: req.flash() });
+        return res.status(400).render('signup', {
+          errors: [{ msg: 'Email already registered' }],
+          old: req.body,
+          messages: req.flash()
+        });
       }
 
       const hashed = await bcrypt.hash(password, 10);
-      const user = await createUser(firstName, lastName, email, hashed, admin);
+
+      const isAdmin = email === process.env.ADMIN_EMAIL;
+
+      const user = await createUser(firstName, lastName, email, hashed, isAdmin);
 
       req.flash('success', 'Account created. Please log in.');
       return res.redirect('/login');
@@ -53,5 +65,24 @@ router.post(
     }
   }
 );
+
+// POST /login
+router.post(
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  })
+);
+
+// GET /logout
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    req.flash('success', 'You have logged out.');
+    res.redirect('/');
+  });
+});
 
 module.exports = router;

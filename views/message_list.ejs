@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+  <head>
+    <%- include('partials/head') %>
+
+  </head>
+  <body>
+    <div class="container">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo">CH</div>
+        <h1 class="site-title">Clubhouse</h1>
+      </div>
+      <nav>
+        <% if (currentUser) { %>
+          <span class="muted">Welcome, <%= currentUser.first_name %>!</span>
+          <a href="/messages/new">Create a new message</a>
+          <a href="/join">Join the club</a>
+          <a href="/logout">Logout</a>
+        <% } else { %>
+          <a href="/login">Login</a>
+          <a href="/signup">Sign up</a>
+        <% } %>
+      </nav>
+    <% if (messages && messages.success && messages.success.length) { %>
+      <div class="flash success">
+        <% messages.success.forEach(m => { %>
+          <p><%= m %></p>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <% if (messages && messages.error && messages.error.length) { %>
+      <div class="flash error">
+        <% messages.error.forEach(m => { %>
+          <p><%= m %></p>
+        <% }) %>
+      </div>
+    <% } %>
+
+    </header>
+
+    <main>
+      <div class="card">
+        <h2>All Messages</h2>
+
+        <% if (!messagesList || messagesList.length === 0) { %>
+          <p class="muted">No messages yet.</p>
+        <% } %>
+
+        <% messagesList.forEach(m => { %>
+          <div class="message">
+            <article>
+              <h3><%= m.title %></h3>
+              <p><%= m.text %></p>
+
+              <% const canSeeAuthor = currentUser && (currentUser.membership_status === 'member' || currentUser.admin); %>
+
+              <% if (canSeeAuthor) { %>
+                <small>
+                  By <%= m.first_name %> <%= m.last_name %> on <%= (new Date(m.created_at)).toLocaleString() %>
+                </small>
+              <% } else { %>
+                <small class="muted">Posted anonymously</small>
+              <% } %>
+
+              <% if (currentUser && currentUser.admin) { %>
+                <form action="/messages/delete/<%= m.id %>" method="GET" style="display: inline">
+                  <button class="secondary" type="submit">Delete</button>
+                </form>
+              <% } %>
+
+            </article>
+          </div>
+        <% }) %>
+      </div>
+    </main>
+
+    </div>
+  </body>
+</html>

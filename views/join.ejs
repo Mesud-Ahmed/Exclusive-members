@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<%- include('partials/head') %>
+  </head>
+  <body>
+    <div class="container center">
+      <div class="card" style="max-width: 420px; width: 100%">
+        <h1>Join the Secret Club</h1>
+        <% if (messages.error) { %>
+        <div class="flash error">
+          <% messages.error.forEach(msg => { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %> <% if (messages.success) { %>
+        <div class="flash success">
+          <% messages.success.forEach(msg => { %>
+          <p><%= msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <form action="/join" method="POST">
+          <div class="field">
+            <label>Secret passcode</label>
+                    <small>for this demo app, the secret code is : <i>open-sesame</i></small>
+
+            <input type="password" name="passcode" required />
+          </div>
+          <div class="field">
+            <button type="submit">Join</button>
+          </div>
+        </form>
+
+        <p class="muted"><a href="/">Back to home</a></p>
+      </div>
+    </div>
+  </body>
+</html>

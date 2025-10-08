@@ -1,0 +1,182 @@
+/* Clubhouse theme - minimal, accessible, and modern */
+:root {
+  --bg: #0f1724; /* deep navy */
+  --card: #0f1b2d; /* slightly lighter */
+  --muted: #9aa7bf;
+  --accent: #67e8f9; /* cyan */
+  --accent-2: #7c3aed; /* purple */
+  --success: #22c55e;
+  --danger: #ef4444;
+  --glass: rgba(255, 255, 255, 0.03);
+  --radius: 10px;
+  --max-width: 900px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg), #08101a 100%);
+  color: #e6eef8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 36px auto;
+  padding: 20px;
+}
+
+header.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #042031;
+}
+.site-title {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 12px;
+}
+nav a:hover {
+  color: var(--accent);
+}
+
+.card {
+  background: var(--card);
+  padding: 16px;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 12px 0;
+}
+
+form .field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+label {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  color: inherit;
+  padding: 10px;
+  border-radius: 8px;
+}
+textarea {
+  min-height: 120px;
+}
+button {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #022029;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+button.secondary {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.muted {
+  color: var(--muted);
+}
+.success {
+  color: var(--success);
+}
+.danger {
+  color: var(--danger);
+}
+
+.message {
+  margin-bottom: 10px;
+}
+.message article {
+  padding: 14px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+.message small {
+  color: var(--muted);
+}
+
+.flash {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.flash.success {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  color: var(--success);
+}
+.flash.error {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.12);
+  color: var(--danger);
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    margin: 18px;
+    padding: 14px;
+  }
+  .site-title {
+    font-size: 1.1rem;
+  }
+}

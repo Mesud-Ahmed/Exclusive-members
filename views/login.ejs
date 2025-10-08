@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<%- include('partials/head') %>
+  </head>
+  <body>
+    <div class="container center">
+      <div class="card" style="max-width: 420px; width: 100%">
+        <h1>Log in</h1>
+
+        <% if (messages.error && messages.error.length) { %>
+        <div class="flash error">
+          <% messages.error.forEach(m => { %>
+          <p><%= m %></p>
+          <% }) %>
+        </div>
+        <% } %> <% if (messages.success && messages.success.length) { %>
+        <div class="flash success">
+          <% messages.success.forEach(m => { %>
+          <p><%= m %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <form action="/login" method="post">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" required />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" required />
+          </div>
+          <div class="field">
+            <button type="submit">Log in</button>
+          </div>
+        </form>
+
+        <p class="muted">
+          Don't have an account? <a href="/signup">Sign up</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

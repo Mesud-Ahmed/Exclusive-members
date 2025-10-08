@@ -11,6 +11,14 @@ async function createUser(firstName, lastName, email, hashedPassword, admin = fa
   return result.rows[0];
 }
 
+async function updateMembershipStatus(userId, status) {
+  const result = await pool.query(
+    `UPDATE users SET membership_status = $1 WHERE id = $2 RETURNING id, email, membership_status`,
+    [status, userId]
+  );
+  return result.rows[0];
+}
+
 async function findUserByEmail(email) {
   const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
   return result.rows[0];
@@ -21,4 +29,4 @@ async function findUserById(id) {
   return result.rows[0];
 }
 
-module.exports = { createUser, findUserByEmail, findUserById };
+module.exports = { createUser, findUserByEmail, findUserById,updateMembershipStatus };
